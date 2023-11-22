@@ -43,13 +43,22 @@ def user_info(username):
     return "User {}'s userpage".format(username)
 
 
-@app.route("/upload", methods=["POST"])
+@app.route("/upload", methods=["GET", "POST"])
 def upload_file():
+    # 获取请求URL
+    r_url = request.url
+    r_host = request.host
+    r_headers = request.headers
+    r_method = request.method
+    print(r_url, r_host, r_headers, r_method)
     file = request.files
-    print(type(file))
-    f = file.get("file")
-    f.save("./{}".format(secure_filename(f.filename)))
-    return "File {} is saved".format(f.filename)
+
+    if r_method == "POST":
+        print(type(file))
+        f = file.get("file")
+        f.save("./{}".format(secure_filename(f.filename)))
+        return "File {} is saved".format(f.filename)
+    return "Please use POST method"
 
 
 if __name__ == '__main__':
