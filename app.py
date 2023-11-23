@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify, render_template
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -59,6 +59,31 @@ def upload_file():
         f.save("./{}".format(secure_filename(f.filename)))
         return "File {} is saved".format(f.filename)
     return "Please use POST method"
+
+
+@app.route("/text")
+def text_resp():
+    return "text"
+
+
+@app.route("/tuple")
+def tuple_resp():
+    return "text", 200, {"header1": "value1"}
+
+
+@app.route("/json")
+def json_resp():
+    return jsonify(status=1, name="LittleStone", age=114514)
+
+
+@app.route("/json2")
+def json_resp2():
+    return {"name": "LittleStone", "age": 114, "status": 2}
+
+
+@app.route("/html")
+def html_resp():
+    return render_template("123.html")
 
 
 if __name__ == '__main__':
