@@ -20,10 +20,25 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    resp = make_response(render_template("123.html"))
+    resp = make_response(render_template("123.html", name="LittleStone2"))
     resp.set_cookie('username', 'LittleStone')
     resp.headers["header1"] = "value1"
     return resp
+
+
+@app.route("/people")
+def people():
+    people = [
+        {
+            "name": "LittleStone",
+            "age": 114514
+        },
+        {
+            "name": "LitteStone2",
+            "age": 114
+        }
+    ]
+    return render_template("people.html", peoples=people)
 
 
 @app.route("/about/")
