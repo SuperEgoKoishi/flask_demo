@@ -3,6 +3,7 @@ from flask import Blueprint
 from werkzeug.utils import secure_filename
 
 goods_router = Blueprint(name="goods", import_name=__name__, url_prefix="/goods")
+app = Flask(__name__)
 
 
 @goods_router.route("/")
@@ -13,9 +14,6 @@ def index():
 @goods_router.route("/add", methods=["POST"])
 def add_goods():
     return {"code": 0, "msg": "add success"}
-
-
-app = Flask(__name__)
 
 
 @app.route("/")
@@ -39,6 +37,11 @@ def people():
         }
     ]
     return render_template("people.html", peoples=people)
+
+
+@app.route("/extend")
+def extend():
+    return render_template("son.html")
 
 
 @app.route("/about/")
