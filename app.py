@@ -1,12 +1,29 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, make_response
+from flask import Blueprint
 from werkzeug.utils import secure_filename
+
+goods_router = Blueprint(name="goods", import_name=__name__, url_prefix="/goods")
+
+
+@goods_router.route("/")
+def index():
+    return {"code": 0, "msg": "get index success", "data": {}}
+
+
+@goods_router.route("/add", methods=["POST"])
+def add_goods():
+    return {"code": 0, "msg": "add success"}
+
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    return "Home Page"
+    resp = make_response(render_template("123.html"))
+    resp.set_cookie('username', 'LittleStone')
+    resp.headers["header1"] = "value1"
+    return resp
 
 
 @app.route("/about/")
@@ -87,4 +104,5 @@ def html_resp():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.register_blueprint(goods_router)
+    app.run(port=114, debug=True)
